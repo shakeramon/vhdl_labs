@@ -1,0 +1,22 @@
+transcript on
+if {[file exists rtl_work]} {
+	vdel -lib rtl_work -all
+}
+vlib rtl_work
+vmap work rtl_work
+
+vcom -2008 -work work {C:/Liel/VHDL/LAB3/src/sync_diff.vhd}
+vcom -2008 -work work {C:/Liel/VHDL/LAB3/src/pulse_generator.vhd}
+vcom -2008 -work work {C:/Liel/VHDL/LAB3/src/counter.vhd}
+vcom -2008 -work work {C:/Liel/VHDL/LAB3/src/bcd_to_7seg.vhd}
+vcom -2008 -work work {C:/Liel/VHDL/LAB3/src/controller.vhd}
+vcom -2008 -work work {C:/Liel/VHDL/LAB3/src/stopwatch.vhd}
+
+vcom -2008 -work work {C:/Liel/VHDL/LAB3/par/../src/stopwatch_tb.vhd}
+
+vsim -t 1ps -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev -L rtl_work -L work -voptargs="+acc"  stopwatch_tb
+
+add wave *
+view structure
+view signals
+run -all

@@ -1,0 +1,95 @@
+m255
+K4
+z2
+!s11e vcom 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Liel/VHDL/LAB3/par/simulation/modelsim
+Econtroller
+Z1 w1721559552
+Z2 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 0
+R0
+Z5 8C:/Liel/VHDL/LAB3/src/controller.vhd
+Z6 FC:/Liel/VHDL/LAB3/src/controller.vhd
+l0
+L6 1
+V15nA3ee7hOG6L3Kkmg^zi1
+!s100 710hi[cUl6:ZCN2Jz;djI2
+Z7 OV;C;2020.1;71
+33
+Z8 !s110 1721653601
+!i10b 1
+Z9 !s108 1721653600.000000
+Z10 !s90 -reportprogress|300|-2008|-work|work|C:/Liel/VHDL/LAB3/src/controller.vhd|
+Z11 !s107 C:/Liel/VHDL/LAB3/src/controller.vhd|
+!i113 1
+Z12 o-2008 -work work
+Z13 tExplicit 1 CvgOpt 0
+Abehave
+R2
+R3
+R4
+DEx4 work 10 controller 0 22 15nA3ee7hOG6L3Kkmg^zi1
+!i122 0
+l29
+L22 97
+VP=j1H6cUb6Ei;;k3k>>OD0
+!s100 ;KP9b:I<fn:3bUC7YgbI[0
+R7
+33
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Econtroller_tb
+Z14 w1721560224
+R3
+R4
+!i122 1
+R0
+Z15 8C:/Liel/VHDL/LAB3/par/../src/controller_tb.vhd
+Z16 FC:/Liel/VHDL/LAB3/par/../src/controller_tb.vhd
+l0
+L4 1
+VKSNF]o@aLbmLD_bJ4=;X52
+!s100 ;8nz1?^_<;GE@nCc`]`ln1
+R7
+33
+R8
+!i10b 1
+Z17 !s108 1721653601.000000
+Z18 !s90 -reportprogress|300|-2008|-work|work|C:/Liel/VHDL/LAB3/par/../src/controller_tb.vhd|
+!s107 C:/Liel/VHDL/LAB3/par/../src/controller_tb.vhd|
+!i113 1
+R12
+R13
+Abehave
+R3
+R4
+DEx4 work 13 controller_tb 0 22 KSNF]o@aLbmLD_bJ4=;X52
+!i122 1
+l35
+L8 59
+Vc>A6a;5kjo0l?IUa]RiDi0
+!s100 aNzMg7]M@>U7IfD:n^Jn]0
+R7
+33
+R8
+!i10b 1
+R17
+R18
+Z19 !s107 C:/Liel/VHDL/LAB3/par/../src/controller_tb.vhd|
+!i113 1
+R12
+R13
