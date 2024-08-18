@@ -1,0 +1,93 @@
+# Reading pref.tcl
+# do light_organ_run_msim_rtl_vhdl.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work rtl_work 
+# Copying C:/intelFPGA/20.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vcom -93 -work work {C:/Intel/VHDL/lab2/src/shift_register.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 17:24:13 on Jul 09,2024
+# vcom -reportprogress 300 -93 -work work C:/Intel/VHDL/lab2/src/shift_register.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity shift_register
+# -- Compiling architecture behave of shift_register
+# ** Warning: C:/Intel/VHDL/lab2/src/shift_register.vhd(19): (vcom-1074) Non-locally static OTHERS choice is allowed only if it is the only choice of the only association.
+# End time: 17:24:13 on Jul 09,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# vcom -93 -work work {C:/Intel/VHDL/lab2/src/pulse_generator.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 17:24:13 on Jul 09,2024
+# vcom -reportprogress 300 -93 -work work C:/Intel/VHDL/lab2/src/pulse_generator.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity pulse_generator
+# -- Compiling architecture behave of pulse_generator
+# End time: 17:24:13 on Jul 09,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {C:/Intel/VHDL/lab2/src/light_organ.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 17:24:13 on Jul 09,2024
+# vcom -reportprogress 300 -93 -work work C:/Intel/VHDL/lab2/src/light_organ.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity light_organ
+# -- Compiling architecture behave of light_organ
+# End time: 17:24:13 on Jul 09,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {C:/Intel/VHDL/lab2/src/direction.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 17:24:13 on Jul 09,2024
+# vcom -reportprogress 300 -93 -work work C:/Intel/VHDL/lab2/src/direction.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity direction
+# -- Compiling architecture behave of direction
+# End time: 17:24:13 on Jul 09,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vcom -93 -work work {C:/Intel/VHDL/lab2/par/../src/pulse_generator_tb.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 17:24:13 on Jul 09,2024
+# vcom -reportprogress 300 -93 -work work C:/Intel/VHDL/lab2/par/../src/pulse_generator_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity pulse_generator_tb
+# -- Compiling architecture test of pulse_generator_tb
+# End time: 17:24:13 on Jul 09,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev -L rtl_work -L work -voptargs="+acc"  pulse_generator_tb
+# vsim -t 1ps -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev -L rtl_work -L work -voptargs=""+acc"" pulse_generator_tb 
+# Start time: 17:24:13 on Jul 09,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.pulse_generator_tb(test)
+# Loading work.pulse_generator(behave)
+# 
+# add wave *
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: liels  Hostname: LIEL  ProcessID: 5752
+#           Attempting to use alternate WLF file "./wlftt6kb5w".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftt6kb5w
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# End time: 17:26:55 on Jul 09,2024, Elapsed time: 0:02:42
+# Errors: 0, Warnings: 2
