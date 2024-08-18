@@ -1,0 +1,49 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+
+entity pulse_generator is
+generic (
+    G_RESET_ACTIVE_VALUE   : std_logic := '1';
+    G_CLOCKS_PER_PULSES    : integer := 100
+);
+port (
+    CLK             : in    std_logic;  -- system clock
+    RST             : in    std_logic;  -- asynchronous reset
+    ENA             : in    std_logic;  -- active high enable
+    CLEAR           : in    std_logic;  -- active high synchronous clear
+    PULSE           : out   std_logic   -- active high 1 CLK duration pulse
+);
+end entity;
+
+architecture behave of pulse_generator is
+
+    signal count    : integer range 0 to G_CLOCKS_PER_PULSES-1 := 0;
+
+
+begin
+
+    generate_pulse: process(CLK, RST)
+    begin
+        if RST = G_RESET_ACTIVE_VALUE then
+            count <= 0;
+            PULSE <= '0';
+        elsif rising_edge(CLK) then
+            
+            PULSE <= '0';
+            
+            if CLEAR = '1' then
+                count <= 0;
+            elsif ENA = '1' then
+                if count >= G_CLOCKS_PER_PULSES-1 then
+                    count <= 0;
+                    PULSE <= '1';
+                else
+                    count <= count + 1;
+                end if;
+            end if;
+        end if;
+    end process;
+    
+
+end architecture;

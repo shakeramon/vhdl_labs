@@ -1,0 +1,88 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity counter is
+generic (
+    G_RESET_ACTIVE_VALUE   : std_logic := '0'
+);
+port (
+    CLK             : in    std_logic;  -- system clock
+    RST             : in    std_logic;  -- asynchronous reset, polarity is according to G_RESET_ACTIVE_VALUE
+    ENA             : in    std_logic;  -- if high, counetr increments every CLK rising edge
+    CLEAR           : in    std_logic;  -- active high synchronous clear
+    OEn             : in    std_logic;  -- active low output enable. If high, COUNT_OUT reflects the internal count value. If low, COUNT_OUT reflects the last variable
+    HUND_ONES       : out   std_logic_vector(3 downto 0);   -- hund sec unity digit
+    HUND_TENS       : out   std_logic_vector(3 downto 0);   -- hund sec tens digit
+    SEC_ONES        : out   std_logic_vector(3 downto 0);   -- sec unity digit
+    SEC_TENS        : out   std_logic_vector(3 downto 0)    -- sec tens digit
+);
+end entity;
+
+architecture behave of counter is
+
+    signal hund_cnt_ones    : integer range 0 to 9 := 0;
+    signal hund_cnt_tens    : integer range 0 to 9 := 0;
+    signal sec_cnt_ones     : integer range 0 to 9 := 0;
+    signal sec_cnt_tens     : integer range 0 to 5 := 0;
+
+begin
+
+    gen_counter: process(CLK, RST)
+    begin
+        if RST = G_RESET_ACTIVE_VALUE then
+            hund_cnt_ones   <= 0;
+            hund_cnt_tens   <= 0;
+            sec_cnt_ones    <= 0;
+            sec_cnt_tens    <= 0;
+            HUND_ONES       <= (others=>'0'); 
+            HUND_TENS       <= (others=>'0'); 
+            SEC_ONES        <= (others=>'0'); 
+            SEC_TENS        <= (others=>'0'); 
+            
+        elsif rising_edge(CLK) then
+
+            if CLEAR = '1' then
+                hund_cnt_ones   <= 0;
+                hund_cnt_tens   <= 0;
+                sec_cnt_ones    <= 0;
+                sec_cnt_tens    <= 0;
+            elsif ENA = '1' then
+                
+                if hund_cnt_ones = 9 then
+                    hund_cnt_ones <= 0;
+                    if hund_cnt_tens = 9 then
+                        hund_cnt_tens <= 0;
+                        
+                        if sec_cnt_ones = 9 then
+                            sec_cnt_ones <= 0;
+                            if sec_cnt_tens = 5 then
+                                sec_cnt_tens <= 0;
+                            else
+                                sec_cnt_tens <= sec_cnt_tens + 1;
+                            end if;
+                        else
+                            sec_cnt_ones <= sec_cnt_ones + 1;
+                        end if;
+                    else
+                        hund_cnt_tens <= hund_cnt_tens + 1;
+                    end if;
+                else
+                    hund_cnt_ones <= hund_cnt_ones + 1;
+                end if;
+            
+            end if;
+
+            if OEn = '0' then
+                HUND_ONES <= std_logic_vector(to_unsigned(hund_cnt_ones, HUND_ONES'length));
+                HUND_TENS <= std_logic_vector(to_unsigned(hund_cnt_tens, HUND_TENS'length)); 
+                SEC_ONES  <= std_logic_vector(to_unsigned(sec_cnt_ones, SEC_ONES'length)); 
+                SEC_TENS  <= std_logic_vector(to_unsigned(sec_cnt_tens, SEC_TENS'length)); 
+            end if;
+
+
+        end if;
+    end process;
+    
+
+end architecture;

@@ -1,0 +1,122 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity stopwatch is
+    Port (
+        SW_START_STOP : in STD_LOGIC;
+        SW_CLEAR : in STD_LOGIC;
+        SW_LAP : in STD_LOGIC;
+        CLK : in STD_LOGIC;
+        RSTn : in STD_LOGIC; -- Assuming active low reset
+        HUND_ONES_7SEG : out STD_LOGIC_VECTOR(6 downto 0);
+        HUND_TENS_7SEG : out STD_LOGIC_VECTOR(6 downto 0);
+        SEC_ONES_7SEG : out STD_LOGIC_VECTOR(6 downto 0);
+        SEC_TENS_7SEG : out STD_LOGIC_VECTOR(6 downto 0)
+    );
+end stopwatch;
+
+architecture Behavioral of stopwatch is
+    -- Signals for internal connections
+    signal SW_START_STOP_sig : STD_LOGIC;
+    signal SW_CLEAR_sig : STD_LOGIC;
+    signal SW_LAP_sig : STD_LOGIC;
+    signal COUNT_LAP : STD_LOGIC;
+    signal COUNT_CLEAR : STD_LOGIC;
+    signal COUNT_ENABLE : STD_LOGIC;
+    signal PULSE : STD_LOGIC;
+    signal HUND_ONES : STD_LOGIC_VECTOR(3 downto 0);
+    signal HUND_TENS : STD_LOGIC_VECTOR(3 downto 0);
+    signal SEC_ONES : STD_LOGIC_VECTOR(3 downto 0);
+    signal SEC_TENS : STD_LOGIC_VECTOR(3 downto 0);
+
+begin
+    -- Instances of the synchronizers for each switch
+    SW_START_STOP_Sync: entity work.sync_diff
+        port map (
+            SIG_IN => SW_START_STOP,
+            CLK => CLK,
+            RST => not RSTn, -- Assuming RSTn is active low
+            SIG_OUT => SW_START_STOP_sig
+        );
+
+    SW_CLEAR_Sync: entity work.sync_diff
+        port map (
+            SIG_IN => SW_CLEAR,
+            CLK => CLK,
+            RST => not RSTn,
+            SIG_OUT => SW_CLEAR_sig
+        );
+
+    SW_LAP_Sync: entity work.sync_diff
+        port map (
+            SIG_IN => SW_LAP,
+            CLK => CLK,
+            RST => not RSTn,
+            SIG_OUT => SW_LAP_sig
+        );
+
+    -- Instance of the controller
+    Controller: entity work.controller
+        port map (
+            SW_START_STOP => SW_START_STOP_sig,
+            SW_CLEAR => SW_CLEAR_sig,
+            SW_LAP => SW_LAP_sig,
+            CLK => CLK,
+            RST => not RSTn,
+            COUNT_LAP => COUNT_LAP,
+            COUNT_CLEAR => COUNT_CLEAR,
+            COUNT_ENABLE => COUNT_ENABLE
+        );
+
+    -- Instance of the pulse generator
+    Pulse_Generator: entity work.pulse_generator
+        port map (
+            CLEAR => COUNT_CLEAR,
+            ENA => COUNT_ENABLE,
+            CLK => CLK,
+            RST => not RSTn,
+            PULSE => PULSE
+        );
+
+    -- Instance of the counter
+    Counter: entity work.counter
+        port map (
+            OEn => PULSE,
+            CLEAR => COUNT_CLEAR,
+            ENA => COUNT_ENABLE,
+            CLK => CLK,
+            RST => not RSTn,
+            HUND_ONES => HUND_ONES,
+            HUND_TENS => HUND_TENS,
+            SEC_ONES => SEC_ONES,
+            SEC_TENS => SEC_TENS
+        );
+
+    -- Instances of BCD to 7-segment converters
+    HUND_ONES_7Seg_Converter: entity work.bcd_to_7seg
+        port map (
+            BCD_IN => HUND_ONES,
+            D_OUT => HUND_ONES_7SEG
+        );
+
+    HUND_TENS_7Seg_Converter: entity work.bcd_to_7seg
+        port map (
+            BCD_IN => HUND_TENS,
+            D_OUT => HUND_TENS_7SEG
+        );
+
+    SEC_ONES_7Seg_Converter: entity work.bcd_to_7seg
+        port map (
+            BCD_IN => SEC_ONES,
+            D_OUT => SEC_ONES_7SEG
+        );
+
+    SEC_TENS_7Seg_Converter: entity work.bcd_to_7seg
+        port map (
+            BCD_IN => SEC_TENS,
+            D_OUT => SEC_TENS_7SEG
+        );
+
+end Behavioral;

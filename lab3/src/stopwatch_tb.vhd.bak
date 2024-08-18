@@ -1,0 +1,102 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL; -- Updated to use numeric_std instead of std_logic_arith and std_logic_unsigned
+
+ENTITY stopwatch_tb IS
+END stopwatch_tb;
+
+ARCHITECTURE behavior OF stopwatch_tb IS 
+
+   -- Updated Component Declaration for the Unit Under Test (UUT)
+COMPONENT stopwatch
+PORT(
+    SW_START_STOP : IN  std_logic;
+    SW_CLEAR : IN  std_logic;
+    SW_LAP : IN  std_logic;
+    CLK : IN  std_logic;
+    RSTn : IN  std_logic;
+    HUND_ONES_7SEG : OUT  std_logic_vector(6 downto 0);
+    HUND_TENS_7SEG : OUT  std_logic_vector(6 downto 0);
+    SEC_ONES_7SEG : OUT  std_logic_vector(6 downto 0);
+    SEC_TENS_7SEG : OUT  std_logic_vector(6 downto 0);
+    MIN_ONES_7SEG : OUT  std_logic_vector(6 downto 0); -- Added for minutes
+    MIN_TENS_7SEG : OUT  std_logic_vector(6 downto 0) -- Added for minutes
+);
+END COMPONENT;
+
+
+   
+    --Inputs
+    signal SW_START_STOP : std_logic := '0';
+    signal SW_CLEAR : std_logic := '0';
+    signal SW_LAP : std_logic := '0';
+    signal CLK : std_logic := '0';
+    signal RSTn : std_logic := '1';
+
+    --Outputs
+    signal HUND_ONES_7SEG : std_logic_vector(6 downto 0);
+    signal HUND_TENS_7SEG : std_logic_vector(6 downto 0);
+    signal SEC_ONES_7SEG : std_logic_vector(6 downto 0);
+    signal SEC_TENS_7SEG : std_logic_vector(6 downto 0);
+    signal MIN_ONES_7SEG : std_logic_vector(6 downto 0); -- Added for minutes
+    signal MIN_TENS_7SEG : std_logic_vector(6 downto 0); -- Added for minutes
+
+    -- Clock period definitions
+    constant CLK_period : time := 10 ns; -- Adjust to match your clock frequency
+
+BEGIN
+     dut:stopwatch
+     
+    -- Instantiate the Unit Under Test (UUT)
+     port map (
+          SW_START_STOP => SW_START_STOP,
+          SW_CLEAR => SW_CLEAR,
+          SW_LAP => SW_LAP,
+          CLK => CLK,
+          RSTn => RSTn,
+          HUND_ONES_7SEG => HUND_ONES_7SEG,
+          HUND_TENS_7SEG => HUND_TENS_7SEG,
+          SEC_ONES_7SEG => SEC_ONES_7SEG,
+          SEC_TENS_7SEG => SEC_TENS_7SEG,
+          MIN_ONES_7SEG => MIN_ONES_7SEG, -- Connected to output
+          MIN_TENS_7SEG => MIN_TENS_7SEG  -- Connected to output
+        );
+
+    -- Clock process definitions
+    CLK_process :process
+    begin
+        loop
+            CLK <= '0';
+            wait for CLK_period/2;
+            CLK <= '1';
+            wait for CLK_period/2;
+        end loop;
+    end process;
+
+    -- Stimulus process
+    stim_proc: process
+    begin	
+        -- hold reset state for 100 ns.
+        wait for 100 ns;	
+        RSTn <= '0';
+        wait for 100 ns;
+        RSTn <= '1';
+
+        -- Start the stopwatch
+        SW_START_STOP <= '1';
+        wait for 20 ns;
+        SW_START_STOP <= '0';
+
+        -- Simulate for one minute
+        -- Assuming one minute is represented by a certain number of clock cycles
+        -- This number should be the number of clock cycles in one minute based on your clock frequency
+		 wait for 100 us;
+
+        -- Check if minutes incremented as expected
+        -- Add your checks/assertions here
+
+        -- Finish the simulation
+        assert FALSE report "End of simulation" severity failure;
+    end process;
+
+END;
